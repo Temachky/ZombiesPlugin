@@ -1,4 +1,4 @@
 name: test
 version: '1.0-SNAPSHOT'
-main: org.example.start.test.BarrierLegacy
+main: org.example.start.test.ZombieApocalypses
 api-version: '1.21'

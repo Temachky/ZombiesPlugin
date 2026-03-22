@@ -1,1 +1,5 @@
-org\example\start\test\BarrierLegacy.class
+org\example\start\test\ZombieApocalypses.class
+org\example\start\test\listeners\DefaultSpawn.class
+org\example\start\test\listeners\removeSpawnVillage.class
+org\example\start\test\listeners\removeCombust.class
+org\example\start\test\SumZom.class
