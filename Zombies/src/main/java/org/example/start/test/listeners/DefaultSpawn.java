@@ -23,10 +23,18 @@ public class DefaultSpawn implements Listener {
             ));
 
 
+    ArrayList<EntityType> entitiForComplete = new ArrayList<EntityType>(List.of(
+            EntityType.ENDER_DRAGON,
+            EntityType.END_CRYSTAL,
+            EntityType.TNT,
+            EntityType.TNT_MINECART,
+            EntityType.BLAZE
+    ));
+
     @EventHandler
     public void Zombieses(CreatureSpawnEvent e) {
 
-        if (!entities.contains(e.getEntity().getType())) {
+        if (!entities.contains(e.getEntity().getType()) || !entitiForComplete.contains(e.getEntity().getType())) {
             e.setCancelled(true);
         }
 
@@ -52,6 +60,22 @@ public class DefaultSpawn implements Listener {
                  world.spawnEntity(lock3, EntityType.ZOMBIE);
              }
          }
+
+        if (e.getEntity().getType() != EntityType.ZOMBIE || entitiForComplete.contains(e.getEntity().getType())) {
+                World world = e.getEntity().getWorld();
+                //spawn first
+                Location lock1 = e.getEntity().getLocation().add(5, 0, 6);
+                int y1 = e.getEntity().getWorld().getHighestBlockYAt(lock1) + 1;
+                lock1.setY(y1);
+                world.spawnEntity(lock1, e.getEntity().getType());
+                //spawn second
+                Location lock2 = e.getEntity().getLocation().add(-7, 0, -10);
+                int y2 = e.getEntity().getWorld().getHighestBlockYAt(lock2) + 1;
+                lock2.setY(y2);
+                world.spawnEntity(lock2, e.getEntity().getType());
+
+        }
+
     }
 
 }
