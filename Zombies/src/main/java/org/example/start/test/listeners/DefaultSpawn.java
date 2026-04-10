@@ -7,8 +7,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,54 +26,53 @@ public class DefaultSpawn implements Listener {
             EntityType.END_CRYSTAL,
             EntityType.TNT,
             EntityType.TNT_MINECART,
-            EntityType.BLAZE
+            EntityType.BLAZE,
+            EntityType.ENDERMAN
     ));
 
     @EventHandler
     public void Zombieses(CreatureSpawnEvent e) {
 
-        if (!entities.contains(e.getEntity().getType()) || !entitiForComplete.contains(e.getEntity().getType())) {
+        World world = e.getEntity().getWorld();
+
+        if (!entities.contains(e.getEntity().getType()) & !entitiForComplete.contains(e.getEntity().getType())) {
             e.setCancelled(true);
+            return;
+        }
+        if (e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.COMMAND || e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.CUSTOM) {
+            return;
         }
 
          if (e.getEntity().getType() == EntityType.ZOMBIE) {
-             Player player = e.getEntity().getWorld().getPlayers().stream().toList().getFirst();
-             int mobes = Array.getLength(player.getNearbyEntities(50, 50, 50));
-             if (mobes <= 50) {
-                 World world = e.getEntity().getWorld();
-                 //spawn first
-                 Location lock1 = e.getEntity().getLocation().add(10, 0, 10);
-                 int y1 = e.getEntity().getWorld().getHighestBlockYAt(lock1) + 1;
-                 lock1.setY(y1);
-                 world.spawnEntity(lock1, EntityType.ZOMBIE);
-                 //spawn second
-                 Location lock2 = e.getEntity().getLocation().add(15, 0, -10);
-                 int y2 = e.getEntity().getWorld().getHighestBlockYAt(lock2) + 1;
-                 lock2.setY(y2);
-                 world.spawnEntity(lock2, EntityType.ZOMBIE);
-                 //spawn third
-                 Location lock3 = e.getEntity().getLocation().add(-5, 0, -10);
-                 int y3 = e.getEntity().getWorld().getHighestBlockYAt(lock3) + 1;
-                 lock3.setY(y3);
-                 world.spawnEntity(lock3, EntityType.ZOMBIE);
+                 List<Player> players = e.getEntity().getWorld().getPlayers();
+                 if(!players.isEmpty()) {
+                     Player player = players.getFirst();
+                     int mobes = player.getNearbyEntities(50, 50, 50).size();
+                     if (mobes <= 50) {
+                         for(int i = 1; i <= 3; i++) {
+                         Spawn(e, world);
+                         }
+                     }
              }
          }
 
-        if (e.getEntity().getType() != EntityType.ZOMBIE || entitiForComplete.contains(e.getEntity().getType())) {
-                World world = e.getEntity().getWorld();
+        if (e.getEntity().getType() != EntityType.ZOMBIE & entitiForComplete.contains(e.getEntity().getType())) {
                 //spawn first
-                Location lock1 = e.getEntity().getLocation().add(5, 0, 6);
-                int y1 = e.getEntity().getWorld().getHighestBlockYAt(lock1) + 1;
-                lock1.setY(y1);
-                world.spawnEntity(lock1, e.getEntity().getType());
+                  Spawn(e,world);
                 //spawn second
-                Location lock2 = e.getEntity().getLocation().add(-7, 0, -10);
-                int y2 = e.getEntity().getWorld().getHighestBlockYAt(lock2) + 1;
-                lock2.setY(y2);
-                world.spawnEntity(lock2, e.getEntity().getType());
-
+                  Spawn(e,world);
+            }
         }
 
-    }
+        public void Spawn(CreatureSpawnEvent e, World world) {
+            Location lock = e.getEntity().getLocation().add(Random(), 0, Random());
+            int y = e.getEntity().getWorld().getHighestBlockYAt(lock) + 1;
+            lock.setY(y);
+            world.spawnEntity(lock, e.getEntity().getType());
+        }
 
+    public int Random() {
+        int random = (int) (Math.random() * (15 - -10 + 1)) + -10;
+        return random;
+    }
 }

@@ -18,7 +18,7 @@ public final class ZombieApocalypses extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new removeSpawnVillage(), this);
 
 
-        SummonZombie = getServer().getScheduler().runTaskTimer(this, new SumZom(), 60 * 20, 30 * 20 );
+        SummonZombie = getServer().getScheduler().runTaskTimer(this, new SumZom(), 60 * 20, 90 * 20 );
 
     }
     @Override

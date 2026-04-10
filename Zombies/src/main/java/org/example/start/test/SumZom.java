@@ -9,17 +9,17 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
 
 public class SumZom implements Runnable{
-    World world = Bukkit.getWorld("test for plugin");
+
     int min = 0;
     int[] coordinates = {20, 25, -25, -20};
-    int max = coordinates.length;
+    int max = coordinates.length - 1;
 
 
 
     @Override
     public void run() {
-
     for (Player player : Bukkit.getOnlinePlayers()) {
+        World world = player.getWorld();
         Location lock = player.getLocation().add(coordinates[Random()], 0, coordinates[Random()]);
         int y = lock.getWorld().getHighestBlockYAt(lock) + 1;
          lock.setY(y);

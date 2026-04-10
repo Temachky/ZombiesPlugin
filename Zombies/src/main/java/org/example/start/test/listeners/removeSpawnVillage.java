@@ -12,5 +12,17 @@ public class removeSpawnVillage implements Listener {
         if(e.getStructure() == Structure.VILLAGE_PLAINS) {
             e.setCancelled(true);
         }
+        if(e.getStructure() == Structure.VILLAGE_DESERT) {
+            e.setCancelled(true);
+        }
+        if(e.getStructure() == Structure.VILLAGE_SNOWY) {
+            e.setCancelled(true);
+        }
+        if(e.getStructure() == Structure.VILLAGE_SAVANNA) {
+            e.setCancelled(true);
+        }
+        if(e.getStructure() == Structure.VILLAGE_TAIGA) {
+            e.setCancelled(true);
+        }
     }
 }
