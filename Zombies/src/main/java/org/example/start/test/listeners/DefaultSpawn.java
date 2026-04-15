@@ -45,23 +45,23 @@ public class DefaultSpawn implements Listener {
 
          if (e.getEntity().getType() == EntityType.ZOMBIE) {
                  List<Player> players = e.getEntity().getWorld().getPlayers();
+                 boolean isSpawn = false;
                  if(!players.isEmpty()) {
-                     Player player = players.getFirst();
-                     int mobes = player.getNearbyEntities(50, 50, 50).size();
-                     if (mobes <= 50) {
-                         for(int i = 1; i <= 3; i++) {
-                         Spawn(e, world);
+                     for(Player player : players) {
+                         int mobes = player.getNearbyEntities(20, 20, 20).size();
+                         if (mobes <= 50) {
+                             for (int i = 1; i <= 2; i++) {
+                                 Spawn(e, world);
+                                 isSpawn = true;
+                                }
                          }
+                         if (isSpawn) break;
                      }
              }
+         } else if (entities.contains(e.getEntity().getType())) {
+             Spawn(e, world);
          }
 
-        if (e.getEntity().getType() != EntityType.ZOMBIE & entitiForComplete.contains(e.getEntity().getType())) {
-                //spawn first
-                  Spawn(e,world);
-                //spawn second
-                  Spawn(e,world);
-            }
         }
 
         public void Spawn(CreatureSpawnEvent e, World world) {
