@@ -12,6 +12,8 @@ import java.util.List;
 
 public class DefaultSpawn implements Listener {
 
+
+    //список мобов которые могут заспавниться
     ArrayList<EntityType> entities = new ArrayList<EntityType>(List.of(
             EntityType.ZOMBIE,
             EntityType.COW,
@@ -20,7 +22,7 @@ public class DefaultSpawn implements Listener {
             EntityType.PIG
             ));
 
-
+    //список сущностей которые нужны для прохождения майна
     ArrayList<EntityType> entitiForComplete = new ArrayList<EntityType>(List.of(
             EntityType.ENDER_DRAGON,
             EntityType.END_CRYSTAL,
@@ -64,6 +66,7 @@ public class DefaultSpawn implements Listener {
 
         }
 
+    //функция для спавна моба в высшей точке
         public void Spawn(CreatureSpawnEvent e, World world) {
             Location lock = e.getEntity().getLocation().add(Random(), 0, Random());
             int y = e.getEntity().getWorld().getHighestBlockYAt(lock) + 1;
@@ -71,6 +74,8 @@ public class DefaultSpawn implements Listener {
             world.spawnEntity(lock, e.getEntity().getType());
         }
 
+
+    //фунция рандома в пределах от 15 до -10
     public int Random() {
         int random = (int) (Math.random() * (15 - -10 + 1)) + -10;
         return random;

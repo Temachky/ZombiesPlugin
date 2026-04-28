@@ -7,6 +7,8 @@ import org.bukkit.generator.structure.Structure;
 
 public class removeSpawnVillage implements Listener {
 
+
+    //запрещаем деревням спавниться
     @EventHandler
     public void WhenVillageSpawn(AsyncStructureSpawnEvent e) {
         if(e.getStructure() == Structure.VILLAGE_PLAINS) {
